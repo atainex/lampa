@@ -25,7 +25,7 @@ class ORM
 		),
 		'limit' => array(
 			'state' => false,
-			'arguments' => array(),
+			'arguments' => null,
 		),
 		'order_by' => array(
 			'state' => false,
@@ -49,6 +49,12 @@ class ORM
 		
 	}
 	
+	public function limit($count) {
+		$this->_sqlStates['limit']['state'] = true;
+		$this->_sqlStates['limit']['arguments'] = $count;
+		return $this;
+	}
+
 	public function select($name, $as = null) {
 		$this->_sqlStates['select']['state'] = true;
 		$this->_sqlStates['select']['arguments'][] = array(
@@ -294,6 +300,7 @@ class ORM
 		$args = array();
 		foreach ($array as $k => $v) {
 			$keys[] = '`'.$table.'`.`'.$k.'`';
+			// $values[] = "'".$v."'";
 			$values[] = DB::factory()->pdo->quote($v);
 			$args[] = '`'.$table.'`.`'.$k.'` = '.DB::factory()->pdo->quote($v);
 		}

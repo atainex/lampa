@@ -1,0 +1,19 @@
+{
+    "name": "atainex/lampa",
+    "description": "nano-engine",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Roman Neiskusan",
+            "email": "a.ta.inex@gmail.com"
+        }
+    ],
+    "require": {
+		
+    },
+    "autoload": {
+        "psr-4": {
+		    "Lampa\\": "system/classes"
+		}
+    }
+}
