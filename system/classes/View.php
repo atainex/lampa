@@ -39,6 +39,12 @@ class View
 	public function __set($key, $value) {
 		$this->set($key, $value);
 	}
+	
+	public function &__get($key) {
+		if (array_key_exists($key, $this->__contents)) {
+			return $this->__contents[$key];
+		}
+	}
 
 	public function __isset($key) {
 		return isset($this->__contents[$key]);

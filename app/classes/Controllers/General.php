@@ -16,17 +16,4 @@ class General extends \Lampa\Template
 	public function before() {
 		parent::before();
 	}
-	// public function index()
-	// {
-		// $exampleVar = 'Hello world! - '.Core::$init->request->param('id').' - '.Core::$init->request->param('opt');
-
-		// $content = View::factory('welcome.php')
-					// ->set('greeting', $exampleVar)
-					// ->render();
-
-		// // $this->view($content);
-		// echo $content;
-	// }
-
-
 }
