@@ -11,6 +11,7 @@ class Route
 	const REGEX_SEGMENT = '[^/.,;?\n]++';
 	const REGEX_ESCAPE  = '[.\\+*?[^\\]${}=!|]';
 	
+	protected $filters = [];
 	protected $defaults = ['action' => 'index'];
 	protected $routeRegex;
 	protected $fileEte = [
@@ -49,7 +50,12 @@ class Route
 	public function getIfNotFoundFileEte() {
 		return $this->fileEte['ifNotFound'];
 	}
-	
+
+    public function getDefaultValue(string $key)
+    {
+        return $this->defaults[$key];
+    }
+
 	public function defaults(array $defaults = NULL) {
 		if ($defaults === NULL) {
 			return $this->defaults;
@@ -112,8 +118,8 @@ class Route
 			$params['directory'] = str_replace(' ', '_', ucwords(str_replace('_', ' ', $params['directory'])));
 		}
 
-		if ($this->_filters) {
-			foreach ($this->_filters as $callback) {
+		if ($this->filters) {
+			foreach ($this->filters as $callback) {
 				$return = call_user_func($callback, $this, $params, $request);
 				if ($return === FALSE) {
 					return FALSE;

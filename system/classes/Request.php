@@ -4,6 +4,8 @@ namespace Lampa;
 
 class Request
 {
+    public $directory;
+
     public $controller;
     public $action;
     public $params;
@@ -37,18 +39,22 @@ class Request
 		return $this;
 	}
 	
-	public static function process($request) {
+	public function process() {
 		$routes = (empty($routes)) ? Route::all() : $routes;
 		foreach ($routes as $route) {
-			if ($params = $route->matches($request)) {
-				return [
-					'params' => $params,
-					'route' => $route,
-				];
+			if ($params = $route->matches($this)) {
+                $this->route = $route;
+                if (isset($params['directory'])) {
+                    $this->directory = $params['directory'];
+                }
+                $this->controller = $params['controller'];
+                $this->action = (isset($params['action'])) ? $params['action'] : $route->getDefaultValue('action');
+                unset($params['controller'], $params['action'], $params['directory']);
+                $this->params = $params;
+                return true;
 			}
 		}
-
-		return NULL;
+        return false;
 	}
 
 }

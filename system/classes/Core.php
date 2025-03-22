@@ -21,17 +21,7 @@ class Core
 	
 	public function run()
 	{
-		$process = Request::process($this->request);
-		if ($process) {
-			$this->request->route = $process['route'];
-			$params = $process['params'];
-			if (isset($params['directory'])) {
-				$this->request->directory = $params['directory'];
-			}
-			$this->request->controller = $params['controller'];
-			$this->request->action = (isset($params['action'])) ? $params['action'] : Route::$default_action;
-			unset($params['controller'], $params['action'], $params['directory']);
-			$this->request->params = $params;
+		if ($this->request->process()) {
 			// Запуск соответствующего контроллера и акта
 			$this->execute();
 		} else {
@@ -43,7 +33,7 @@ class Core
 	public function execute() {
 		Core::$init = $this;
 		if (!empty($this->request->route->getFileEte())) {
-			if (file_exists($this->request->route->getFileEte())) {
+            if (file_exists($this->request->route->getFileEte())) {
 				require $this->request->route->getFileEte();
 				exit();
 			} else {

@@ -33,7 +33,7 @@ class DB
         
         if(!$stmt){
             echo "\nPDO::errorInfo():\n"; 
-            print_r($dbh->errorInfo());
+            print_r($stmt->errorInfo());
             die();
         }
 		try {
